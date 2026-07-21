@@ -1,0 +1,4 @@
+lambda_a,lamA_dual_critico,lectura
+0.35,0.361,alpha vive si lamA_dual <= critico
+0.4,0.44,alpha vive si lamA_dual <= critico
+0.45,0.516,alpha vive si lamA_dual <= critico

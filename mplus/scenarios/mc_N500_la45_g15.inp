@@ -1,0 +1,37 @@
+TITLE: Dark Agency - MonteCarlo potencia LMS S-1 | N=500 lambda_a=0.45 gamma3=0.15
+! Reemplazar 500 0.45 0.15 por escenario (ver R/gen_mplus_scenarios.R). SEED por celda.
+MONTECARLO:
+  NAMES = m1-m7 n1-n7 p1-p7 s1-s7 ea1-ea13 peh1-peh3;   ! Mach,Narc,Psic,Sad,EA,PEH
+  NOBSERVATIONS = 500;
+  NREPS = 1000;
+  SEED = 56621;
+ANALYSIS:
+  TYPE = RANDOM;
+  ESTIMATOR = MLR;
+  ALGORITHM = INTEGRATION;
+  INTEGRATION = 15;
+  PROCESSORS = 4;
+MODEL POPULATION:
+  ! --- S-1: Psic+Sad definen A_ref (solo-referencia); Narc+Mach cargan en A_ref y alpha ---
+  ! Cargas duales sobre A_ref ANCLADAS en correlaciones interfactoriales SD4 publicadas:
+  ! Narc<->nucleo r~.35 -> .35 ; Mach<->nucleo r~.25 -> .20 (Blotner 2021 T1; Bajcsi 2025 T4).
+  Aref BY p1-p7*.60 s1-s7*.60 n1-n7*.35 m1-m7*.20;
+  alpha BY n1-n7*0.45 m1-m7*0.45;                 ! carga especifica = escenario
+  EA BY ea1-ea13*.70;
+  PEH BY peh1-peh3*.75;
+  Aref@1; alpha@1; EA@1; PEH@1;
+  Aref WITH alpha@0;                               ! ortogonalidad S-1 (dura)
+  Aref WITH PEH@0; alpha WITH PEH*.10;
+  int | alpha XWITH PEH;                           ! interaccion latente LMS
+  EA ON alpha*.30 Aref*0 PEH*.20 int*0.15;         ! gamma1,gamma2,gamma4,gamma3
+  m1-m7*.7 n1-n7*.7 p1-p7*.6 s1-s7*.5 ea1-ea13*.5 peh1-peh3*.4;  ! resid
+MODEL:
+  Aref BY p1-p7*.60 s1-s7*.60 n1-n7*.35 m1-m7*.20;
+  alpha BY n1-n7*0.45 m1-m7*0.45;
+  EA BY ea1-ea13*.70;
+  PEH BY peh1-peh3*.75;
+  Aref@1; alpha@1; EA@1; PEH@1;
+  Aref WITH alpha@0; Aref WITH PEH@0; alpha WITH PEH*.10;
+  int | alpha XWITH PEH;
+  EA ON alpha*.30 Aref*0 PEH*.20 int*0.15;
+OUTPUT: TECH9;   ! TECH9 = mensajes de convergencia/errores por replica

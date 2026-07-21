@@ -1,0 +1,13 @@
+output/replicas_qml.csv
+output/replicas_qml_BACKUP_*.csv
+output/logs/
+.claude/
+
+*_v7.md
+Auditoria_*.md
+Correcciones_*.md
+Cuestionario_*.md
+Indicadores_*.md
+Mega_*.md
+Procedimiento_*.md
+Resumen_Tecnico*.md

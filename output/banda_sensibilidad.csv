@@ -1,0 +1,4 @@
+banda,lambda_a,lamA_dual,omegaHS_alpha,estatus
+sensibilidad_alpha_fragil,0.35,0.45,0.328,"alpha fragil/muerto (robustez, no decision N)"
+sensibilidad_alpha_fragil,0.4,0.45,0.392,"alpha fragil/muerto (robustez, no decision N)"
+sensibilidad_alpha_fragil,0.45,0.45,0.453,"alpha fragil/muerto (robustez, no decision N)"

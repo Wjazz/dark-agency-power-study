@@ -1,0 +1,94 @@
+nohup: ignoring input
+celda 13: ya completa (300/300) [qml]
+celda 14: ya completa (300/300) [qml]
+celda 15: ya completa (300/300) [qml]
+celda 16: ya completa (300/300) [qml]
+celda 17 (N=450 la=0.40 g3=0.10, qml): 300/300 replicas pendientes
+[2026-07-13 01:55:16] celda 17 lote 1/43 (7 replicas) escrito | ETA celda: 428.4 min
+[2026-07-13 02:04:23] celda 17 lote 2/43 (7 replicas) escrito | ETA celda: 396.2 min
+[2026-07-13 02:14:56] celda 17 lote 3/43 (7 replicas) escrito | ETA celda: 398.2 min
+[2026-07-13 02:22:17] celda 17 lote 4/43 (7 replicas) escrito | ETA celda: 362.9 min
+[2026-07-13 02:28:34] celda 17 lote 5/43 (7 replicas) escrito | ETA celda: 330.7 min
+[2026-07-13 02:34:38] celda 17 lote 6/43 (7 replicas) escrito | ETA celda: 305.7 min
+[2026-07-13 02:41:56] celda 17 lote 7/43 (7 replicas) escrito | ETA celda: 292.5 min
+[2026-07-13 02:49:21] celda 17 lote 8/43 (7 replicas) escrito | ETA celda: 281.2 min
+[2026-07-13 02:57:21] celda 17 lote 9/43 (7 replicas) escrito | ETA celda: 273.1 min
+[2026-07-13 03:04:23] celda 17 lote 10/43 (7 replicas) escrito | ETA celda: 261.8 min
+[2026-07-13 03:11:12] celda 17 lote 11/43 (7 replicas) escrito | ETA celda: 250.6 min
+[2026-07-13 03:18:05] celda 17 lote 12/43 (7 replicas) escrito | ETA celda: 240.3 min
+[2026-07-13 03:25:09] celda 17 lote 13/43 (7 replicas) escrito | ETA celda: 231.0 min
+[2026-07-13 03:32:43] celda 17 lote 14/43 (7 replicas) escrito | ETA celda: 223.0 min
+[2026-07-13 03:40:18] celda 17 lote 15/43 (7 replicas) escrito | ETA celda: 215.1 min
+[2026-07-13 03:48:19] celda 17 lote 16/43 (7 replicas) escrito | ETA celda: 208.0 min
+[2026-07-13 03:56:03] celda 17 lote 17/43 (7 replicas) escrito | ETA celda: 200.3 min
+[2026-07-13 04:04:46] celda 17 lote 18/43 (7 replicas) escrito | ETA celda: 194.0 min
+[2026-07-13 04:12:01] celda 17 lote 19/43 (7 replicas) escrito | ETA celda: 185.6 min
+[2026-07-13 04:19:46] celda 17 lote 20/43 (7 replicas) escrito | ETA celda: 177.9 min
+[2026-07-13 04:27:20] celda 17 lote 21/43 (7 replicas) escrito | ETA celda: 170.0 min
+[2026-07-13 04:35:30] celda 17 lote 22/43 (7 replicas) escrito | ETA celda: 162.7 min
+[2026-07-13 04:42:55] celda 17 lote 23/43 (7 replicas) escrito | ETA celda: 154.7 min
+[2026-07-13 04:52:44] celda 17 lote 24/43 (7 replicas) escrito | ETA celda: 148.6 min
+[2026-07-13 05:01:52] celda 17 lote 25/43 (7 replicas) escrito | ETA celda: 141.7 min
+[2026-07-13 05:10:39] celda 17 lote 26/43 (7 replicas) escrito | ETA celda: 134.4 min
+[2026-07-13 05:19:17] celda 17 lote 27/43 (7 replicas) escrito | ETA celda: 126.9 min
+[2026-07-13 05:28:03] celda 17 lote 28/43 (7 replicas) escrito | ETA celda: 119.5 min
+[2026-07-13 05:39:52] celda 17 lote 29/43 (7 replicas) escrito | ETA celda: 113.3 min
+[2026-07-13 05:47:23] celda 17 lote 30/43 (7 replicas) escrito | ETA celda: 105.0 min
+[2026-07-13 05:53:22] celda 17 lote 31/43 (7 replicas) escrito | ETA celda: 96.1 min
+[2026-07-13 05:59:35] celda 17 lote 32/43 (7 replicas) escrito | ETA celda: 87.5 min
+[2026-07-13 06:05:49] celda 17 lote 33/43 (7 replicas) escrito | ETA celda: 79.0 min
+[2026-07-13 06:12:01] celda 17 lote 34/43 (7 replicas) escrito | ETA celda: 70.7 min
+[2026-07-13 06:17:54] celda 17 lote 35/43 (7 replicas) escrito | ETA celda: 62.4 min
+[2026-07-13 06:23:52] celda 17 lote 36/43 (7 replicas) escrito | ETA celda: 54.2 min
+[2026-07-13 06:29:45] celda 17 lote 37/43 (7 replicas) escrito | ETA celda: 46.2 min
+[2026-07-13 06:35:54] celda 17 lote 38/43 (7 replicas) escrito | ETA celda: 38.3 min
+[2026-07-13 06:42:00] celda 17 lote 39/43 (7 replicas) escrito | ETA celda: 30.5 min
+[2026-07-13 06:48:05] celda 17 lote 40/43 (7 replicas) escrito | ETA celda: 22.7 min
+[2026-07-13 06:54:03] celda 17 lote 41/43 (7 replicas) escrito | ETA celda: 15.1 min
+[2026-07-13 07:00:30] celda 17 lote 42/43 (7 replicas) escrito | ETA celda: 7.5 min
+[2026-07-13 07:05:51] celda 17 lote 43/43 (6 replicas) escrito | ETA celda: 0.0 min
+celda 18 (N=450 la=0.40 g3=0.15, qml): 300/300 replicas pendientes
+[2026-07-13 07:11:57] celda 18 lote 1/43 (7 replicas) escrito | ETA celda: 256.1 min
+[2026-07-13 07:18:19] celda 18 lote 2/43 (7 replicas) escrito | ETA celda: 255.7 min
+[2026-07-13 07:24:33] celda 18 lote 3/43 (7 replicas) escrito | ETA celda: 249.3 min
+[2026-07-13 07:30:53] celda 18 lote 4/43 (7 replicas) escrito | ETA celda: 244.1 min
+[2026-07-13 07:36:52] celda 18 lote 5/43 (7 replicas) escrito | ETA celda: 235.8 min
+[2026-07-13 07:43:10] celda 18 lote 6/43 (7 replicas) escrito | ETA celda: 230.1 min
+[2026-07-13 07:49:20] celda 18 lote 7/43 (7 replicas) escrito | ETA celda: 223.6 min
+[2026-07-13 07:55:34] celda 18 lote 8/43 (7 replicas) escrito | ETA celda: 217.5 min
+[2026-07-13 08:01:38] celda 18 lote 9/43 (7 replicas) escrito | ETA celda: 210.8 min
+[2026-07-13 08:07:30] celda 18 lote 10/43 (7 replicas) escrito | ETA celda: 203.5 min
+[2026-07-13 08:13:13] celda 18 lote 11/43 (7 replicas) escrito | ETA celda: 196.0 min
+[2026-07-13 08:19:45] celda 18 lote 12/43 (7 replicas) escrito | ETA celda: 190.9 min
+[2026-07-13 08:25:46] celda 18 lote 13/43 (7 replicas) escrito | ETA celda: 184.4 min
+[2026-07-13 08:31:52] celda 18 lote 14/43 (7 replicas) escrito | ETA celda: 178.2 min
+[2026-07-13 08:37:48] celda 18 lote 15/43 (7 replicas) escrito | ETA celda: 171.6 min
+[2026-07-13 08:43:45] celda 18 lote 16/43 (7 replicas) escrito | ETA celda: 165.2 min
+[2026-07-13 08:49:49] celda 18 lote 17/43 (7 replicas) escrito | ETA celda: 159.0 min
+[2026-07-13 08:55:45] celda 18 lote 18/43 (7 replicas) escrito | ETA celda: 152.6 min
+[2026-07-13 09:01:42] celda 18 lote 19/43 (7 replicas) escrito | ETA celda: 146.3 min
+[2026-07-13 09:08:19] celda 18 lote 20/43 (7 replicas) escrito | ETA celda: 140.8 min
+[2026-07-13 09:14:42] celda 18 lote 21/43 (7 replicas) escrito | ETA celda: 135.0 min
+[2026-07-13 09:20:46] celda 18 lote 22/43 (7 replicas) escrito | ETA celda: 128.8 min
+[2026-07-13 09:26:56] celda 18 lote 23/43 (7 replicas) escrito | ETA celda: 122.7 min
+[2026-07-13 09:32:55] celda 18 lote 24/43 (7 replicas) escrito | ETA celda: 116.4 min
+[2026-07-13 09:39:24] celda 18 lote 25/43 (7 replicas) escrito | ETA celda: 110.6 min
+[2026-07-13 09:45:55] celda 18 lote 26/43 (7 replicas) escrito | ETA celda: 104.7 min
+[2026-07-13 09:52:04] celda 18 lote 27/43 (7 replicas) escrito | ETA celda: 98.5 min
+[2026-07-13 09:58:03] celda 18 lote 28/43 (7 replicas) escrito | ETA celda: 92.3 min
+[2026-07-13 10:04:01] celda 18 lote 29/43 (7 replicas) escrito | ETA celda: 86.0 min
+[2026-07-13 10:10:07] celda 18 lote 30/43 (7 replicas) escrito | ETA celda: 79.8 min
+[2026-07-13 10:16:01] celda 18 lote 31/43 (7 replicas) escrito | ETA celda: 73.6 min
+[2026-07-13 10:22:17] celda 18 lote 32/43 (7 replicas) escrito | ETA celda: 67.5 min
+[2026-07-13 10:28:42] celda 18 lote 33/43 (7 replicas) escrito | ETA celda: 61.5 min
+[2026-07-13 10:34:32] celda 18 lote 34/43 (7 replicas) escrito | ETA celda: 55.2 min
+[2026-07-13 10:40:28] celda 18 lote 35/43 (7 replicas) escrito | ETA celda: 49.1 min
+[2026-07-13 10:46:24] celda 18 lote 36/43 (7 replicas) escrito | ETA celda: 42.9 min
+[2026-07-13 10:52:38] celda 18 lote 37/43 (7 replicas) escrito | ETA celda: 36.8 min
+[2026-07-13 10:58:41] celda 18 lote 38/43 (7 replicas) escrito | ETA celda: 30.6 min
+[2026-07-13 11:04:58] celda 18 lote 39/43 (7 replicas) escrito | ETA celda: 24.5 min
+[2026-07-13 11:11:02] celda 18 lote 40/43 (7 replicas) escrito | ETA celda: 18.4 min
+[2026-07-13 11:17:11] celda 18 lote 41/43 (7 replicas) escrito | ETA celda: 12.3 min
+[2026-07-13 11:23:33] celda 18 lote 42/43 (7 replicas) escrito | ETA celda: 6.1 min
+[2026-07-13 11:28:54] celda 18 lote 43/43 (6 replicas) escrito | ETA celda: 0.0 min
+LOTE COMPLETO: qml 

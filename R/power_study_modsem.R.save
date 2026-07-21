@@ -1,0 +1,118 @@
+# =====================================================================
+# Dark Agency — Estudio de potencia LMS/QML (modsem) sin Mplus. Reproducible,
+# reanudable (checkpoint por replica) y paralelizado. Interaccion latente por
+# modsem::modsem (method="qml"|"lms"). NUNCA productos observados, NUNCA
+# semopy/jamovi/lavaan-interaccion. lavaan solo genera datos poblacionales.
+# Etapa screening (QML, R=300, Klein & Muthen 2007) sobre las 6 celdas de
+# decision; etapa final (LMS, R=1000, Klein & Moosbrugger 2000) solo en las
+# celdas que el screening ubique en la frontera de potencia .80 (+-.05).
+# R por etapa: Morris, White & Crowther 2019 (EMC de la potencia estimada).
+# =====================================================================
+# Requiere: lavaan, modsem, MASS, parallel. install.packages(c("lavaan","modsem"))
+.libPaths(c("~/R/library", .libPaths()))
+suppressMessages({library(lavaan); library(modsem); library(parallel)})
+
+Ns  <- c(250,300,350,450,500); LAs <- c(.35,.40,.45); G3s <- c(.10,.15)
+BASESEED <- 53711
+G1 <- .30; G2 <- 0; G4 <- .20; APEH <- .10   # parametros estructurales fijos (C1/C2, sin tocar)
+
+# --- DGP manual: genera latentes (con interaccion) e indicadores. NO usa productos
+#     observados para estimar; el producto solo existe en la ecuacion poblacional de EA. ---
+gen_data <- function(N, LA, G3) {
+  # latentes exogenas: Aref ⟂ alpha ⟂ PEH salvo alpha~PEH=.10
+  S <- matrix(c(1,0,0, 0,1,APEH, 0,APEH,1), 3, byrow=TRUE)   # Aref, alpha, PEH
+  Z <- MASS::mvrnorm(N, mu=c(0,0,0), Sigma=S)
+  Aref<-Z[,1]; alpha<-Z[,2]; PEH<-Z[,3]
+  EA <- G1*alpha + G2*Aref + G4*PEH + G3*(alpha*PEH) +
+        rnorm(N, 0, sqrt(max(1 - (G1^2+G4^2+G3^2*(1+2*APEH^2)),.05)))
+  ld <- function(f,lam,k,pre) { m<-outer(f,rep(lam,k))+matrix(rnorm(N*k,0,sqrt(1-lam^2)),N);
+                                colnames(m)<-paste0(pre,1:k); m }
+  # Psic/Sad solo-referencia; Narc/Mach dual. Cargas sobre A_ref ANCLADAS en
+  # correlaciones interfactoriales SD4 publicadas: Narc=.35, Mach=.20 (Blotner 2021 T1;
+  # Bajcsi 2025 T4). NO homogeneo .55 (contrafactico). NO inflar LA (Opcion 2 rechazada).
+  laN<-.35; laM<-.20
+  P<-ld(Aref,.60,7,"p"); Sd<-ld(Aref,.60,7,"s")
+  resN<-sqrt(max(1-laN^2-LA^2,.05)); resM<-sqrt(max(1-laM^2-LA^2,.05))
+  Ndim<-outer(Aref,rep(laN,7))+outer(alpha,rep(LA,7))+matrix(rnorm(N*7,0,resN),N); colnames(Ndim)<-paste0("n",1:7)
+  Mdim<-outer(Aref,rep(laM,7))+outer(alpha,rep(LA,7))+matrix(rnorm(N*7,0,resM),N); colnames(Mdim)<-paste0("m",1:7)
+  PEHi<-ld(PEH,.75,3,"peh"); EAi<-ld(EA/sd(EA),.70,13,"ea")
+  as.data.frame(cbind(Mdim,Ndim,P,Sd,EAi,PEHi))
+}
+
+# --- modelo de analisis modsem (con termino latente int = alpha:PEH) ---
+fit_model <- '
+  Aref =~ p1+p2+p3+p4+p5+p6+p7+s1+s2+s3+s4+s5+s6+s7+n1+n2+n3+n4+n5+n6+n7+m1+m2+m3+m4+m5+m6+m7
+  alpha =~ n1+n2+n3+n4+n5+n6+n7+m1+m2+m3+m4+m5+m6+m7
+  PEH =~ peh1+peh2+peh3
+  EA  =~ ea1+ea2+ea3+ea4+ea5+ea6+ea7+ea8+ea9+ea10+ea11+ea12+ea13
+  Aref ~~ 0*alpha
+  EA ~ alpha + Aref + PEH + alpha:PEH
+'
+grid <- expand.grid(N=Ns, LA=LAs, G3=G3s)   # orden identico en todas las etapas/lotes
+
+# --- (3) etapa y seleccion de celdas ---
+METHOD   <- Sys.getenv("METHOD", "qml")     # screening="qml" (default), final="lms"
+NREP     <- as.integer(Sys.getenv("NREP", "300"))
+CELL_IDX <- Sys.getenv("CELL_IDX", "")      # lista separada por comas: celdas de frontera para la etapa final
+CELLS    <- Sys.getenv("CELLS", "decision")
+decision_rows <- which(with(grid, LA==.40 & N %in% c(300,350,450)))  # 6 celdas: g3={.10,.15} x N={300,350,450}
+sel <- seq_len(nrow(grid))
+       if (CELLS=="decision") decision_rows else
+       if (CELLS=="rest")     setdiff(seq_len(nrow(grid)), decision_rows) else seq_len(nrow(grid))
+
+dir.create("output", showWarnings=FALSE)
+NCORES <- 1
+OUTCSV <- sprintf("output/replicas_%s.csv", METHOD)
+
+# --- (1) checkpoint: (celda, replica) ya escritas para este metodo -> se saltan ---
+done <- if (file.exists(OUTCSV)) {
+  d <- read.csv(OUTCSV); d[d$method==METHOD, c("cell","replica")]
+} else data.frame(cell=integer(0), replica=integer(0))
+
+# --- una replica: ajusta el modelo y arma la fila de salida ---
+fit_one <- function(cell, rep) {
+  N<-grid$N[cell]; LA<-grid$LA[cell]; G3<-grid$G3[cell]
+  G3M <- .70*G3/(LA*.75)  # gamma3 poblacional en la metrica del modelo (identif. por 1er indicador)
+  # (2) semilla por replica, unica e independiente del orden de ejecucion en mclapply
+  seed <- BASESEED + ((cell-1L)*100000L + rep)*101L
+  set.seed(seed)
+  dat <- tryCatch(gen_data(N,LA,G3), error=function(e) NULL)
+  f  <- if (!is.null(dat)) tryCatch(suppressWarnings(
+          modsem::modsem(fit_model, dat, method=METHOD)), error=function(e) NULL) else NULL
+  pe <- if (!is.null(f)) tryCatch(modsem::parameter_estimates(f), error=function(e) NULL) else NULL
+  ok <- !is.null(pe); est<-NA_real_; se<-NA_real_; p<-NA_real_; heywood<-FALSE
+  if (ok) {
+    secol <- grep("std\\.?error|^se$", names(pe), ignore.case=TRUE, value=TRUE)[1]
+    pcol  <- grep("^p\\.?value|^pvalue|Pr", names(pe), ignore.case=TRUE, value=TRUE)[1]
+    row   <- pe[pe$lhs=="EA" & pe$op=="~" & grepl("alpha.*PEH|PEH.*alpha|int", pe$rhs),]
+    vr    <- pe[pe$op=="~~" & pe$lhs==pe$rhs, "est"]
+    heywood <- any(is.finite(vr) & vr < 0)
+    if (nrow(row) && !is.na(secol) && !is.na(pcol)) { est<-row$est[1]; se<-row[[secol]][1]; p<-row[[pcol]][1] } else ok<-FALSE
+  }
+  data.frame(cell=cell, N=N, lambda_a=LA, gamma3=G3, gamma3_metrica_modelo=round(G3M,4),
+             replica=rep, seed=seed, method=METHOD,
+             gamma3_hat=est, se=se, p=p, converged=ok, heywood=heywood)
+}
+
+# --- (1)+(2) por celda: replicas pendientes, en lotes de NCORES, checkpoint tras cada lote ---
+# --- (1)+(2) por celda: replicas pendientes en paralelo continuo con checkpoint inmediato ---
+for (cell in sel) {
+  pending <- setdiff(seq_len(NREP), done$replica[done$cell==cell])
+  if (!length(pending)) { cat(sprintf("celda %d: ya completa (%d/%d) [%s]\n", cell, NREP, NREP, METHOD)); next }
+  cat(sprintf("celda %d (N=%d la=%.2f g3=%.2f, %s): %d/%d replicas pendientes\n",
+              cell, grid$N[cell], grid$LA[cell], grid$G3[cell], METHOD, length(pending), NREP))
+  
+  # Lanza todas las pendientes directas a mclapply; el balanceo de carga interno se encarga
+  rows <- parallel::mclapply(pending, function(rep) fit_one(cell, rep), mc.cores=NCORES)
+  
+  # Guarda en disco inmediatamente al terminar el set de la celda
+  for (row in rows) {
+    if (!is.null(row)) {
+      write.table(row, OUTCSV, sep=",", row.names=FALSE,
+                  col.names=!file.exists(OUTCSV), append=file.exists(OUTCSV))
+    }
+  }
+  flush(stdout())
+}
+writeLines(capture.output(sessionInfo()), sprintf("output/sessionInfo_%s.txt", METHOD))
+cat("LOTE COMPLETO:", METHOD, "\n")
