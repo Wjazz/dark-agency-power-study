@@ -11,3 +11,8 @@ Indicadores_*.md
 Mega_*.md
 Procedimiento_*.md
 Resumen_Tecnico*.md
+
+# salidas pesadas de la malla v3 (los .rds por celda se regeneran)
+output/v3/*.rds
+output/bench/
+logs/v3/
